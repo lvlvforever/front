@@ -4,18 +4,31 @@
     <div>
         <el-button @click="startHacking">Start</el-button>
     </div>
-    <el-upload class="upload-demo" drag action="http://daipeng.site:9999/file/upload" multiple :on-success="onSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-    </el-upload>
     <div>
-    <span v-html="url"></span>
-    </div>
-    <div>
-      <img :src="url">
+        <el-upload class="upload-demo" drag action="http://daipeng.site:9999/file/upload" multiple :on-success="onSuccess">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+
     </div>
 
+    <div>
+        <span v-html="url"></span>
+    </div>
+    <div>
+        <img :src="url">
+    </div>
+    <div>
+        <el-upload class="upload-demo" drag action="http://daipeng.site:9999/file/uploadTmpFile" multiple :on-success="onTmpFileSuccess">
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        </el-upload>
+
+    </div>
+    <div>
+        <span v-html="tmpFileUrl"></span>
+    </div>
 </div>
 </template>
 
@@ -24,6 +37,7 @@ export default {
     data() {
         return {
             url: '图片Url',
+            tmpFileUrl: "文件url"
         }
     },
     methods: {
@@ -36,7 +50,10 @@ export default {
             })
         },
         onSuccess(response, file, fileList) {
-            this.url= 'http://daipeng.site/image/'+response.fileId
+            this.url = 'http://daipeng.site/image/' + response.fileId
+        },
+        onTmpFileSuccess(response, file, fileList) {
+            this.tmpFileUrl = 'http://daipeng.site/file/' + response.fileId
         }
     }
 }
